@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hugeardor.vidit.autonomous.MainActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:weightSum="1">
+
+
+        <EditText
+           android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:layout_weight="0.65"
+            android:paddingTop="10dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="10dp"
+            android:hint="Data of file"
+            android:id='@+id/ed'
+            android:background="@drawable/textstyle2"
+            >
+            </EditText>
+
+      <RelativeLayout
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content">
+
+          <!--<ProgressBar
+              android:id="@+id/progressBar"
+              style="?android:attr/progressBarStyle"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+
+              android:minHeight="50dip"
+              android:progressDrawable="@drawable/pg"
+              android:layout_alignParentTop="true"
+              android:layout_centerHorizontal="true" />-->
+      </RelativeLayout>
+
+
+
+    </LinearLayout>
+
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/fab3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="@dimen/fab_margin"
+        android:src="@drawable/two"
+
+
+        />
+
+
+</android.support.design.widget.CoordinatorLayout>
