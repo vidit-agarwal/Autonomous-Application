@@ -44,6 +44,7 @@ import static android.graphics.Color.BLUE;
 import static android.graphics.Color.GREEN;
 import static android.graphics.Color.RED;
 import static android.graphics.Color.YELLOW;
+import static com.hugeardor.vidit.autonomous.R.attr.colorAccent;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -255,39 +256,7 @@ public class MainActivity extends AppCompatActivity
 
 
     }
-    public void showdata(String x)
-    {
-        /*String name= x;
-        File go = new File(path + name);
-        File sdcard = Environment.getExternalStorageDirectory();
 
-//Get the text file
-        File file = new File(sdcard,"file.txt");
-
-//Read text from file
-        StringBuilder text = new StringBuilder();
-
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(file));
-            String line;
-
-            while ((line = br.readLine()) != null) {
-                text.append(line);
-                text.append('\n');
-            }
-            br.close();
-        }
-        catch (IOException e) {
-            //You'll need to add proper error handling here
-        }
-
-//Find the view by its id
-        TextView tv = (TextView)findViewById(R.id.text_view);
-
-//Set the text
-        tv.setText(text.toString());
-*/
-    }
     public static void Save(File file, String[] data)
     {
         FileOutputStream fos = null;
@@ -427,7 +396,35 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            Intent set= new Intent(MainActivity.this, SettingsActivity.class) ;
+            /*Intent set= new Intent(MainActivity.this, SettingsActivity.class) ;
+            startActivity(set);*/
+            final AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(this);
+            alertDialogBuilder.setTitle("Information!");
+
+            alertDialogBuilder.setIcon(R.drawable.info);
+            alertDialogBuilder.setMessage("This App is developed by :\nVidit Agarwal\nviditvivo@gmail.com");
+
+            //alertDialogBuilder.setViewBackground(HALLOWEEN_ORANGE);
+            alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener()
+            {
+
+                @Override
+                public void onClick(DialogInterface arg0, int arg1) {
+                    // TODO Auto-generated method stub
+                    // Toast.makeText(getApplicationContext(),"EXIT SUCCESSFUL !!!",Toast.LENGTH_SHORT).show();
+
+
+                }
+            });
+
+
+
+            AlertDialog alertDialog=alertDialogBuilder.create();
+            alertDialog.show();
+
+            alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(getResources().getColor(R.color.colorAccent));
+
+
         }
 
         return super.onOptionsItemSelected(item);

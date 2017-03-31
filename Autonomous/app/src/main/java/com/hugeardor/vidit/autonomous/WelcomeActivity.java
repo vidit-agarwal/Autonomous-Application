@@ -6,12 +6,15 @@ package com.hugeardor.vidit.autonomous;
 
 
         import android.content.Context;
+        import android.content.DialogInterface;
         import android.content.Intent;
         import android.graphics.Color;
+        import android.net.Uri;
         import android.os.Build;
         import android.os.Bundle;
         import android.support.v4.view.PagerAdapter;
         import android.support.v4.view.ViewPager;
+        import android.support.v7.app.AlertDialog;
         import android.support.v7.app.AppCompatActivity;
         import android.text.Html;
         import android.view.LayoutInflater;
@@ -22,6 +25,10 @@ package com.hugeardor.vidit.autonomous;
         import android.widget.Button;
         import android.widget.LinearLayout;
         import android.widget.TextView;
+
+        import static android.graphics.Color.BLUE;
+        import static android.graphics.Color.GREEN;
+        import static android.graphics.Color.RED;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -39,6 +46,54 @@ public class WelcomeActivity extends AppCompatActivity {
 
         // Checking for first time launch - before calling setContentView()
         prefManager = new PrefManager(this);
+        //context = this;
+        final AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(this);
+        alertDialogBuilder.setTitle("Permission!");
+
+        alertDialogBuilder.setIcon(R.drawable.perm);
+        alertDialogBuilder.setMessage("Give the App the Storage permission for Read/Write files\nFor this :\n  Go to Settings -> Permissions -> Select Storage -> Select Autonomous Application\n  Else the Application won't work normally");
+
+        //alertDialogBuilder.setViewBackground(HALLOWEEN_ORANGE);
+        alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener()
+        {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                // TODO Auto-generated method stub
+                // Toast.makeText(getApplicationContext(),"EXIT SUCCESSFUL !!!",Toast.LENGTH_SHORT).show();
+                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Deny",new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+                Intent startMain = new Intent(Intent.ACTION_MAIN);
+                startMain.addCategory(Intent.CATEGORY_HOME);
+                startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(startMain);
+                finish();
+
+
+            }
+        });
+        alertDialogBuilder.setNeutralButton("I have", new DialogInterface.OnClickListener(){
+            public void onClick(DialogInterface dialog, int which) {
+                // TODO Auto-generated method stub
+
+
+
+            }
+        }) ;
+        AlertDialog alertDialog=alertDialogBuilder.create();
+        alertDialog.show();
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(BLUE);
+        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(RED);
+        alertDialog.getButton(alertDialog.BUTTON_NEUTRAL).setTextColor(GREEN);
+
+
         if (!prefManager.isFirstTimeLaunch()) {
             launchHomeScreen();
             finish();

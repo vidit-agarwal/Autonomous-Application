@@ -4,7 +4,7 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">Infomation</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Strings related to Settings -->
@@ -93,7 +93,7 @@
     <string name="slide_3_desc">Autonomous is a new field in Research - Development!</string>
 
     <string name="slide_4_title">Future Work !</string>
-    <string name="slide_4_desc">This Application is in development phase.Improvements are required to take this app towards perfection</string>
+    <string name="slide_4_desc">This Application is in development phase.IMprovements are equired to take this app towards perfection</string>
 
     <string name="play_again_desc">To see the welcome slider again, goto Settings -> apps -> welcome slider -> clear data</string>
     <string name="play_again">Play Again</string>
