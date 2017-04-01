@@ -5,13 +5,16 @@ package com.hugeardor.vidit.autonomous;
  */
 
 
+        import android.Manifest;
         import android.content.Context;
         import android.content.DialogInterface;
         import android.content.Intent;
+        import android.content.pm.PackageManager;
         import android.graphics.Color;
         import android.net.Uri;
         import android.os.Build;
         import android.os.Bundle;
+        import android.support.annotation.NonNull;
         import android.support.v4.view.PagerAdapter;
         import android.support.v4.view.ViewPager;
         import android.support.v7.app.AlertDialog;
@@ -25,6 +28,7 @@ package com.hugeardor.vidit.autonomous;
         import android.widget.Button;
         import android.widget.LinearLayout;
         import android.widget.TextView;
+        import android.widget.Toast;
 
         import static android.graphics.Color.BLUE;
         import static android.graphics.Color.GREEN;
@@ -32,6 +36,7 @@ package com.hugeardor.vidit.autonomous;
 
 public class WelcomeActivity extends AppCompatActivity {
 
+    private  static final int PERMS_REQUEST_CODE = 123;
     private ViewPager viewPager;
     private MyViewPagerAdapter myViewPagerAdapter;
     private LinearLayout dotsLayout;
@@ -44,10 +49,88 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        // Checking for first time launch - before calling setContentView()
+        if(haspermission())
+        {
+                // it means our application has permissions required to read and write storage
+            run();
+        }
+        else
+        {
+            // this means our app  doesnot have permission
+            reqpermission();
+        }
+
+
+    }
+    private boolean haspermission()
+    {
+        int res =0;
+        String[] permissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        String[] permission_read = new String[]{Manifest.permission.READ_EXTERNAL_STORAGE};
+
+        for(String perms : permissions)
+        {
+            res= checkCallingOrSelfPermission(perms);
+            if(!(res== PackageManager.PERMISSION_GRANTED))
+            {
+                return false;
+            }
+        }
+            return true ;
+
+    }
+    private void reqpermission()
+    {
+        String[] permissions = new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE};
+        if(Build.VERSION.SDK_INT>= Build.VERSION_CODES.M)
+        {
+            requestPermissions(permissions, PERMS_REQUEST_CODE);
+
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        boolean allowed = true ;
+        switch (requestCode)
+        {
+            case PERMS_REQUEST_CODE :
+                for(int res : grantResults)
+                {
+                    //if user granted all permissions
+                    allowed = allowed && (res==PackageManager.PERMISSION_GRANTED);
+                }
+                break;
+            default :
+                // if user not granted permissions
+                allowed = false ;
+
+                break ;
+        }
+        if(allowed)
+        {
+            // it meas that user granted all permsions
+            run();
+        }
+        else
+        {
+            // we will give warning to user that permission has not been granted
+            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
+            {
+                if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE))
+                {
+                    Toast toast = Toast.makeText(getApplicationContext() , "Permission Denied" , Toast.LENGTH_SHORT);
+                    toast.show();
+                }
+            }
+        }
+    }
+
+    public void run()
+    {
         prefManager = new PrefManager(this);
         //context = this;
-        final AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(this);
+        /*final AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(this);
         alertDialogBuilder.setTitle("Permission!");
 
         alertDialogBuilder.setIcon(R.drawable.perm);
@@ -92,7 +175,7 @@ public class WelcomeActivity extends AppCompatActivity {
         alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(BLUE);
         alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(RED);
         alertDialog.getButton(alertDialog.BUTTON_NEUTRAL).setTextColor(GREEN);
-
+*/
 
         if (!prefManager.isFirstTimeLaunch()) {
             launchHomeScreen();
