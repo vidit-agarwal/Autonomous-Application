@@ -119,8 +119,33 @@ public class WelcomeActivity extends AppCompatActivity {
             {
                 if(shouldShowRequestPermissionRationale(Manifest.permission.WRITE_EXTERNAL_STORAGE))
                 {
-                    Toast toast = Toast.makeText(getApplicationContext() , "Permission Denied" , Toast.LENGTH_SHORT);
-                    toast.show();
+                    final AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(this);
+                    alertDialogBuilder.setTitle("Permission Denied!");
+
+                    alertDialogBuilder.setIcon(R.drawable.perm);
+                    alertDialogBuilder.setMessage("User has denied the permission");
+
+                    //alertDialogBuilder.setViewBackground(HALLOWEEN_ORANGE);
+                    alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener()
+                    {
+
+                        @Override
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            // TODO Auto-generated method stub
+                            // Toast.makeText(getApplicationContext(),"EXIT SUCCESSFUL !!!",Toast.LENGTH_SHORT).show();
+                         //   startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
+                            Intent startMain = new Intent(Intent.ACTION_MAIN);
+                            startMain.addCategory(Intent.CATEGORY_HOME);
+                            startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(startMain);
+                            finish();
+                        }
+                    });
+
+                    AlertDialog alertDialog=alertDialogBuilder.create();
+                    alertDialog.show();
+                    alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(RED);
+
                 }
             }
         }
@@ -130,52 +155,6 @@ public class WelcomeActivity extends AppCompatActivity {
     {
         prefManager = new PrefManager(this);
         //context = this;
-        /*final AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(this);
-        alertDialogBuilder.setTitle("Permission!");
-
-        alertDialogBuilder.setIcon(R.drawable.perm);
-        alertDialogBuilder.setMessage("Give the App the Storage permission for Read/Write files\nFor this :\n  Go to Settings -> Permissions -> Select Storage -> Select Autonomous Application\n  Else the Application won't work normally");
-
-        //alertDialogBuilder.setViewBackground(HALLOWEEN_ORANGE);
-        alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener()
-        {
-
-            @Override
-            public void onClick(DialogInterface arg0, int arg1) {
-                // TODO Auto-generated method stub
-                // Toast.makeText(getApplicationContext(),"EXIT SUCCESSFUL !!!",Toast.LENGTH_SHORT).show();
-                startActivityForResult(new Intent(android.provider.Settings.ACTION_SETTINGS), 0);
-
-            }
-        });
-        alertDialogBuilder.setNegativeButton("Deny",new DialogInterface.OnClickListener() {
-
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-                Intent startMain = new Intent(Intent.ACTION_MAIN);
-                startMain.addCategory(Intent.CATEGORY_HOME);
-                startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(startMain);
-                finish();
-
-
-            }
-        });
-        alertDialogBuilder.setNeutralButton("I have", new DialogInterface.OnClickListener(){
-            public void onClick(DialogInterface dialog, int which) {
-                // TODO Auto-generated method stub
-
-
-
-            }
-        }) ;
-        AlertDialog alertDialog=alertDialogBuilder.create();
-        alertDialog.show();
-        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(BLUE);
-        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(RED);
-        alertDialog.getButton(alertDialog.BUTTON_NEUTRAL).setTextColor(GREEN);
-*/
 
         if (!prefManager.isFirstTimeLaunch()) {
             launchHomeScreen();

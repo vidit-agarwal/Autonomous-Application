@@ -24,7 +24,7 @@ public class splash extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.splash);
         tv = (TextView)findViewById(R.id.tv) ;
-        iv = (ImageView)findViewById(R.id.iv);
+       // iv = (ImageView)findViewById(R.id.iv);
         Display display = getWindowManager().getDefaultDisplay();
         final Point size = new Point();
         display.getSize(size);

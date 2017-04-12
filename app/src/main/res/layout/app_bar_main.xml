@@ -15,7 +15,7 @@
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@color/colorPrimary"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </android.support.design.widget.AppBarLayout>
@@ -23,26 +23,18 @@
     <include layout="@layout/content_main"
         android:id="@+id/include" />
 
-   <!-- <Button
-        android:id="@+id/bSave"
+
+    <android.support.design.widget.FloatingActionButton
+        android:id="@+id/trash"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|right"
-        android:text="Save"
-        android:onClick="writeMessage"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="center_vertical|left" />
+        android:layout_gravity="bottom|end"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="86dp"
+        android:onClick="trash"
+        app:srcCompat="@drawable/trash"
 
-    <Button
-        android:id="@+id/bLoad"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical|center_horizontal"
-        android:text="Load"
-        android:onClick="saveMessage"
-        app:layout_anchor="@+id/include"
-        app:layout_anchorGravity="center_vertical|right" /> -->
-
+        />
     <android.support.design.widget.FloatingActionButton
          android:id="@+id/fab"
          android:layout_width="wrap_content"
@@ -50,13 +42,14 @@
          android:layout_gravity="bottom|end"
          android:layout_margin="@dimen/fab_margin"
          android:onClick="writeMessage"
-         app:srcCompat="@drawable/plus"
+         app:srcCompat="@android:drawable/ic_menu_edit"
+
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
          />
 
-     <android.support.design.widget.FloatingActionButton
+     <!--<android.support.design.widget.FloatingActionButton
          android:id="@+id/fab1"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
@@ -67,6 +60,8 @@
          android:layout_alignParentEnd="true"
          android:layout_alignParentRight="true"
          android:layout_gravity="bottom|right"
-         app:srcCompat="@drawable/save" />
+         app:srcCompat="@drawable/save" />-->
+
+
 
 </android.support.design.widget.CoordinatorLayout>

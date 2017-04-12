@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -16,6 +17,8 @@ import android.view.animation.TranslateAnimation;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -32,13 +35,14 @@ import static com.hugeardor.vidit.autonomous.MainActivity.Load;
 
 public class Editclass extends Activity {
 
+    private SharedPreferences pref ;
+    private String rest_pref = "MyPref" ;
     public EditText ed;
-    public ProgressDialog pg;
+    String rest_item ;
+    //public ProgressDialog pg;
     File path = new File(Environment.getExternalStorageDirectory(), "Autonomous");
 
-    String fd = DateFormat.format("MM-dd-yyyyy-h-mmssaa", System.currentTimeMillis()).toString();
-
-    final  Handler h = new Handler();
+    final Handler h = new Handler();
     final int delay = 15000; //milliseconds
     Runnable runnable;
     File path_backup = new File(Environment.getExternalStorageDirectory(), "Autonomous_Backup");
@@ -47,16 +51,12 @@ public class Editclass extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.edit);
-        pg=new ProgressDialog(this);
-        pg.setMessage("Backing Up");
-        pg.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-        pg.setIndeterminate(true);
-        pg.setProgress(0);
-        pg.setCancelable(true);
-        if(!path_backup.exists())
-        //dir.mkdirs();
+
+
+        if (!path_backup.exists())
+
         {
-            path_backup.mkdirs() ;
+            path_backup.mkdirs();
         }
         ed = (EditText) findViewById(R.id.ed);
 
@@ -64,221 +64,236 @@ public class Editclass extends Activity {
 
         Intent receive = getIntent();
         final String item = receive.getStringExtra("item");
+        rest_item = item;
+        pref = getSharedPreferences(rest_pref, MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putString("file name" , rest_item);
+        editor.commit();
 
-        File f = new File(path.toString()) ;
+        File f = new File(path.toString());
 
         File data_path = new File(path, item);
 
-        String [] loadText = Load(data_path);
+        String[] loadText = Load(data_path);
 
         String finalString = "";
 
-        for (int i = 0; i < loadText.length; i++)
-        {
+        for (int i = 0; i < loadText.length; i++) {
             finalString += loadText[i] + System.getProperty("line.separator");
         }
 
         ed.setText(finalString);
 
 
-
         fab3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 save(item);
+
+
             }
         });
 
 
-        back_up(item);
+        //back_up(item);
+        h.postDelayed(new Runnable() {
+            public void run() {
+                //do something
+                back_up(item);
+
+                runnable = this;
+                h.postDelayed(this, delay);
 
 
-
+            }
+        }, delay);
 
     }
 
-    public void back_up(final String item)
-    {
 
 
-        h.postDelayed(new Runnable(){
-            public void run(){
-                //do something
-
-                //fd =DateFormat.format("MM-dd-yyyyy-h-mmssaa", System.currentTimeMillis()).toString() ;
-
-                File file = new File(path_backup, item +".txt") ; // path to backup_folder
-                String [] saveText = String.valueOf(ed.getText()).split(System.getProperty("line.separator"));
 
 
-                pg.show();
 
 
-                Thread wait= new Thread()
-                {
-                    public void run()
-                    {
-                        try{
+    public void back_up(final String item) {
 
-                            sleep(3000);
-                        }
-                        catch(Exception e)
-                        {
-                            e.printStackTrace();
-                        }
-                        finally{
-                            pg.cancel();
-                        }
-                    }
-                };
-                wait.start();
 
-                File f = new File(path_backup.toString()) ;
+          File file = new File(path_backup, item); // path to backup_folder
+                String[] saveText = String.valueOf(ed.getText()).split(System.getProperty("line.separator"));
+               final Toast auto = Toast.makeText(getApplicationContext() , "Auto Saving !" , Toast.LENGTH_SHORT);
+                auto.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                auto.cancel();
+            }
+        }, 200);
 
-                for(File file_backup: f.listFiles()) {
+                File f = new File(path_backup.toString());
+
+                for (File file_backup : f.listFiles()) {
+
 
                     if (file_backup.getName().equals(item)) {
                         File dfl = new File(path_backup, item);
                         boolean del = dfl.delete();
 
 
-
-
                     }
                 }
 
                 Save_backup(file, saveText);
-                runnable=this;
-                h.postDelayed(this, delay);
 
-            }
-        }, delay);
     }
-    public static void Save_backup(File file, String[] data)
-    {
+
+    public static void Save_backup(File file, String[] data) {
+
+        // this method is for writig file in the folder of backup
         FileOutputStream fos = null;
-        try
-        {
+        try {
             fos = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        catch (FileNotFoundException e) {e.printStackTrace();}
-        try
-        {
-            try
-            {
-                for (int i = 0; i<data.length; i++)
-                {
+        try {
+            try {
+                for (int i = 0; i < data.length; i++) {
                     fos.write(data[i].getBytes());
-                    if (i < data.length-1)
-                    {
+                    if (i < data.length - 1) {
                         fos.write("\n".getBytes());
                     }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            catch (IOException e) {e.printStackTrace();}
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            catch (IOException e) {e.printStackTrace();}
         }
     }
 
-    public void save(String item)
-    {
+    public void save(String item) {
 
-        fd = DateFormat.format("MM-dd-yyyyy-h-mmssaa", System.currentTimeMillis()).toString() ;
-        //File file = new File (path + "/saveFile" +fd+".txt"); //file path to save
-        File file = new File(path, fd +".txt") ;
-        String [] saveText = String.valueOf(ed.getText()).split(System.getProperty("line.separator"));
+        // this method will be called when save button is clicked
+        final File file = new File(path, item );
+        final String[] saveText = String.valueOf(ed.getText()).split(System.getProperty("line.separator"));
+        final File dfl = new File(path, item);
 
-        ed.setText("");
-        File dfl = new File(path, item);
-        boolean del = dfl.delete();
-        Save_f (file, saveText);
-
-         final AlertDialog.Builder alertDialogBuilder=new AlertDialog.Builder(this);
+        final AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Editclass.this);
         alertDialogBuilder.setTitle("Message!");
-
+        alertDialogBuilder.setCancelable(false);
         alertDialogBuilder.setIcon(R.drawable.msg1);
-        alertDialogBuilder.setMessage("Old file\n "+ item + " \nhas changed to\n " + file.getName() + " \ndue to change in content detected "+"!");
-
-        //alertDialogBuilder.setViewBackground(HALLOWEEN_ORANGE);
-        alertDialogBuilder.setPositiveButton("Ok",new DialogInterface.OnClickListener()
-        {
+        alertDialogBuilder.setMessage("Save file : " + item + "!");
+        alertDialogBuilder.setPositiveButton("Save", new DialogInterface.OnClickListener() {
 
             @Override
             public void onClick(DialogInterface arg0, int arg1) {
                 // TODO Auto-generated method stub
-                   // Intent back = new Intent(Editclass.this, MainActivity.class);
-                h.removeCallbacks(runnable);
-                startActivity(new Intent(Editclass.this,MainActivity.class));
+                // Intent back = new Intent(Editclass.this, MainActivity.class);
+                boolean del = dfl.delete();
+                Save_f(file, saveText);
+                h.removeCallbacksAndMessages(null); // changed
+
+
+
+                pref= getSharedPreferences(rest_pref, MODE_PRIVATE);
+                SharedPreferences.Editor editor = pref.edit();
+                editor.remove("file name");//its remove name field from your SharedPreferences
+                editor.commit();
+
+                Intent startMain = new Intent(Editclass.this, MainActivity.class);
+                //startMain.addCategory(Intent.CATEGORY_HOME);
+                //startMain.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(startMain);
+                finish();
+
+
+
+            }
+        });
+        alertDialogBuilder.setNegativeButton("Don't Save", new DialogInterface.OnClickListener() {
+
+            @Override
+            public void onClick(DialogInterface arg0, int arg1) {
+                // TODO Auto-generated method stub
             }
         });
 
 
-        AlertDialog alertDialog=alertDialogBuilder.create();
+        AlertDialog alertDialog = alertDialogBuilder.create();
         alertDialog.show();
-         alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(BLUE);
-
+        alertDialog.getButton(alertDialog.BUTTON_POSITIVE).setTextColor(BLUE);
+        alertDialog.getButton(alertDialog.BUTTON_NEGATIVE).setTextColor(RED);
 
     }
-    public static void Save_f(File file, String[] data)
-    {
+
+    public static void Save_f(File file, String[] data) {
         FileOutputStream fos = null;
-        try
-        {
+        try {
             fos = new FileOutputStream(file);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
-        catch (FileNotFoundException e) {e.printStackTrace();}
-        try
-        {
-            try
-            {
-                for (int i = 0; i<data.length; i++)
-                {
+        try {
+            try {
+                for (int i = 0; i < data.length; i++) {
                     fos.write(data[i].getBytes());
-                    if (i < data.length-1)
-                    {
+                    if (i < data.length - 1) {
                         fos.write("\n".getBytes());
                     }
                 }
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            catch (IOException e) {e.printStackTrace();}
-        }
-        finally
-        {
-            try
-            {
+        } finally {
+            try {
                 fos.close();
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-            catch (IOException e) {e.printStackTrace();}
         }
-
-
 
 
     }
+
 
 
     @Override
     public void onBackPressed() {
 
-      // do nothing
+        final Toast dsp = Toast.makeText(getApplicationContext() , "Save File First" , Toast.LENGTH_SHORT);
+        dsp.show();
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dsp.cancel();
+            }
+        }, 150);
 
 
-        }
-        @Override
-    public void onPause(){
-            h.removeCallbacks(runnable);
-            super.onPause();
+    }
+
+    @Override
+    protected void onPause() {
+        h.removeCallbacksAndMessages(null);
+
+        super.onPause();
+    }
+
+    @Override
+
+    protected void onResume() {
+        h.postDelayed(runnable, delay);
+
+        super.onResume();
+
     }
 
 
-
 }
-
-

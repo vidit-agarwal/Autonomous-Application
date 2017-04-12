@@ -39,24 +39,6 @@
     </item>
     <item
         is-multidex="false"
-        jar="/home/vidit/.android/build-cache/8153da9e43a613434b0c1acceb74a27261140ef1/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
-        <dex dex="/home/vidit/Desktop/AndroidStudioProjects/Autonomous/app/build/intermediates/pre-dexed/debug/classes_693e10015e5e30d397fd87e014aa99771af35f2c.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/vidit/.android/build-cache/ecb459047f52e5617cb3c2c59ffb8e180e44cb4f/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
-        <dex dex="/home/vidit/Desktop/AndroidStudioProjects/Autonomous/app/build/intermediates/pre-dexed/debug/classes_d04805b0c345ead8dbc108d0f3af06c8bf7a11a1.jar" />
-    </item>
-    <item
-        is-multidex="false"
         jar="/home/vidit/.android/build-cache/2512bd15d1d3e5ec5e5edfb1875cfb92187d275a/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -84,6 +66,42 @@
     </item>
     <item
         is-multidex="false"
+        jar="/home/vidit/.android/build-cache/a60f8f1824311ad060ff09b5a8323f6273f06c5f/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
+        <dex dex="/home/vidit/Desktop/AndroidStudioProjects/Autonomous/app/build/intermediates/pre-dexed/debug/classes_12f1c4cabdbfa49f5bfb8914add673f9e7068753.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/usr/local/android-studio/gradle/m2repository/commons-io/commons-io/2.4/commons-io-2.4.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="b1b6ea3b7e4aa4f492509a4952029cd8e48019ad">
+        <dex dex="/home/vidit/Desktop/AndroidStudioProjects/Autonomous/app/build/intermediates/pre-dexed/debug/commons-io-2.4_fdce6042c36c2a3f4b93daf8167562e8e898e2c6.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/vidit/.android/build-cache/8153da9e43a613434b0c1acceb74a27261140ef1/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="fa0446a14ed5dd3725047d6399ffea771a564b30">
+        <dex dex="/home/vidit/Desktop/AndroidStudioProjects/Autonomous/app/build/intermediates/pre-dexed/debug/classes_693e10015e5e30d397fd87e014aa99771af35f2c.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/home/vidit/.android/build-cache/ecb459047f52e5617cb3c2c59ffb8e180e44cb4f/output/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="25.0.2"
+        sha1="d7c42c80f6509b9ea4db28ca7859ffae08ec5741">
+        <dex dex="/home/vidit/Desktop/AndroidStudioProjects/Autonomous/app/build/intermediates/pre-dexed/debug/classes_d04805b0c345ead8dbc108d0f3af06c8bf7a11a1.jar" />
+    </item>
+    <item
+        is-multidex="false"
         jar="/home/vidit/.android/build-cache/b3d993dbf48149437f10b6ff1b2b3e70b29c495f/output/jars/classes.jar"
         jumboMode="false"
         optimize="true"
@@ -99,15 +117,6 @@
         revision="25.0.2"
         sha1="67eb33110dbacb46a48175b08ae0c96761d2c17d">
         <dex dex="/home/vidit/Desktop/AndroidStudioProjects/Autonomous/app/build/intermediates/pre-dexed/debug/classes_f13b36cf630a198cae2c40fd1b588f224b5c9fab.jar" />
-    </item>
-    <item
-        is-multidex="false"
-        jar="/home/vidit/.android/build-cache/a60f8f1824311ad060ff09b5a8323f6273f06c5f/output/jars/classes.jar"
-        jumboMode="false"
-        optimize="true"
-        revision="25.0.2"
-        sha1="cb454b52545859ed2f24a6c01366805b0fa04b22">
-        <dex dex="/home/vidit/Desktop/AndroidStudioProjects/Autonomous/app/build/intermediates/pre-dexed/debug/classes_12f1c4cabdbfa49f5bfb8914add673f9e7068753.jar" />
     </item>
 
 </items>

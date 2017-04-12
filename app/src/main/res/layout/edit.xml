@@ -17,14 +17,14 @@
            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:minHeight="100dp"
-            android:layout_weight="0.65"
+
             android:paddingTop="10dp"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
             android:paddingBottom="10dp"
-            android:hint="Data of file"
+            android:hint="File Data"
             android:id='@+id/ed'
-            android:background="@drawable/textstyle2"
+            android:background="#efffef"
             >
             </EditText>
 
@@ -55,7 +55,9 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
-        android:src="@drawable/two"
+        app:srcCompat="@drawable/_save"
+
+
 
 
         />
